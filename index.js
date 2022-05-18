@@ -60,24 +60,41 @@ const createTimeOutEvent = (empRecord, dateStamp) => {
   return newEvent
 }
 
-cRecord = createEmployeeRecord(['Julius', 'Caesar', 'General', 1000])
-createTimeInEvent(cRecord, '0044-03-15 0900')
-createTimeOutEvent(cRecord, '0044-03-15 1100')
+// cRecord = createEmployeeRecord(['Julius', 'Caesar', 'General', 1000])
+// createTimeInEvent(cRecord, '0044-03-15 0900')
+// createTimeOutEvent(cRecord, '0044-03-15 1100')
 
 const hoursWorkedOnDate = (empRecord, date) => {
-  console.log(empRecord)
-  //console.log(date)
-  for (let element in empRecord) {
-    let dateIn = empRecord.timeInEvents
-    //console.log(dateIn)
-    for (element of dateIn) {
-      //console.log(element.date)
-      //console.log(date)
-      if (element.date === date && element.type === 'TimeIn') {
-        console.log(element.hour)
-      }
-    }
-  }
+  const timeInEvent = empRecord.timeInEvents
+
+  const inDateMatch = timeInEvent.filter(element => element.date === date)
+
+  const startTime = inDateMatch[0].hour
+  // console.log(startTime)
+
+  const timeOutEvent = empRecord.timeOutEvents
+  const outDateMatch = timeOutEvent.filter(element => element.date === date)
+  const endTime = outDateMatch[0].hour
+  // console.log(endTime)
+
+  const hoursWorked = (endTime - startTime) / 100
+  return hoursWorked
+  // console.log(hoursWorked)
 }
 
-hoursWorkedOnDate(cRecord, '0044-03-15')
+// hoursWorkedOnDate(cRecord, '0044-03-15')
+
+// cRecord = createEmployeeRecord(['Julius', 'Caesar', 'General', 27])
+// createTimeInEvent(cRecord, '0044-03-15 0900')
+// createTimeOutEvent(cRecord, '0044-03-15 1100')
+
+const wagesEarnedOnDate = (empRecord, date) => {
+  const hoursWorked = hoursWorkedOnDate(empRecord, date)
+  console.log(hoursWorked)
+  const payRate = empRecord.payPerHour
+  console.log(payRate)
+  const wages = hoursWorked * payRate
+  console.log(wages)
+  return wages
+}
+// wagesEarnedOnDate(cRecord, '0044-03-15')
