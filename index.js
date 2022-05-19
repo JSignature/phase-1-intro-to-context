@@ -22,7 +22,7 @@ const createEmployeeRecords = twoRows => {
   return employeeRecords
 }
 
-let bpRecord = createEmployeeRecord(['Byron', 'Poodle', 'Mascot', 3])
+// let bpRecord = createEmployeeRecord(['Byron', 'Poodle', 'Mascot', 3])
 
 const createTimeInEvent = (empRecord, dateStamp) => {
   let timeInEvent = dateStamp.split(' ')
@@ -41,7 +41,7 @@ const createTimeInEvent = (empRecord, dateStamp) => {
   return newEvent
 }
 
-createTimeInEvent(bpRecord, '2014-02-28 1400')
+// createTimeInEvent(bpRecord, '2014-02-28 1400')
 
 const createTimeOutEvent = (empRecord, dateStamp) => {
   let timeOutEvent = dateStamp.split(' ')
@@ -90,11 +90,45 @@ const hoursWorkedOnDate = (empRecord, date) => {
 
 const wagesEarnedOnDate = (empRecord, date) => {
   const hoursWorked = hoursWorkedOnDate(empRecord, date)
-  console.log(hoursWorked)
+  // console.log(hoursWorked)
   const payRate = empRecord.payPerHour
-  console.log(payRate)
+  // console.log(payRate)
   const wages = hoursWorked * payRate
-  console.log(wages)
+  // console.log(wages)
   return wages
 }
 // wagesEarnedOnDate(cRecord, '0044-03-15')
+
+// cRecord = createEmployeeRecord(['Julius', 'Caesar', 'General', 27])
+// createTimeInEvent(cRecord, '0044-03-14 0900')
+// createTimeOutEvent(cRecord, '0044-03-14 2100')
+// createTimeInEvent(cRecord, '0044-03-15 0900')
+// createTimeOutEvent(cRecord, '0044-03-15 1100')
+
+const allWagesFor = empRecord => {
+  console.log(empRecord)
+  let wagesDue = 0
+  const array = empRecord.timeInEvents
+  // console.log(array)
+
+  for (let e of array) {
+    // console.log(e.date)
+    const dateWages = wagesEarnedOnDate(empRecord, e.date)
+    // console.log(dateWages)
+    wagesDue += dateWages
+  }
+  return wagesDue
+}
+// allWagesFor(cRecord)
+
+// createEmployeeRecord(['Rafiki', '', 'Aide', 10])
+// createEmployeeRecord(['Simba', '', 'King', 100])
+
+const calculatePayroll = empArr => {
+  let grandTotalOwed = 0
+  for (let e of empArr) {
+    const empWages = allWagesFor(e)
+    grandTotalOwed += empWages
+  }
+  return grandTotalOwed
+}
